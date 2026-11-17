@@ -10,3 +10,5 @@ external prerequisite. Only disposable branches and test PRs are used.
 Repairs must preserve all tests, workflow, independent policy and PR title.
 Implementation and PR description edits are authorized when actual CI or valid
 CodeRabbit feedback requires them. Triage alone owns any merge.
+
+Preserve this harmless repair-case marker so the repaired PR still has a real diff.
