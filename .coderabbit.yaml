@@ -1,0 +1,6 @@
+reviews:
+  request_changes_workflow: true
+  auto_review:
+    enabled: true
+    base_branches:
+      - "^codex/native-e2e-base$"

@@ -1,0 +1,38 @@
+name: Native Auto-fix required contracts
+on:
+  pull_request:
+    branches: [codex/native-e2e-base]
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+permissions:
+  contents: read
+jobs:
+  required-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Implementation contracts
+        run: python3 -m unittest discover -s fixture -p 'test_*.py' -v
+      - name: Required description
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          with open(os.environ['GITHUB_EVENT_PATH']) as source:
+              body = json.load(source)['pull_request'].get('body') or ''
+          assert re.search(r'(?im)^## Customer impact\s*\n\s*\S', body), 'Add a nonempty ## Customer impact section to the PR description.'
+          PY
+      - name: Wait for CI continuation observation
+        run: sleep 60
+      - name: Read independent policy
+        uses: actions/checkout@v4
+        with:
+          ref: codex/native-e2e-policy
+          path: .e2e-policy
+          persist-credentials: false
+      - name: Independent required policy
+        run: python3 .e2e-policy/check.py
