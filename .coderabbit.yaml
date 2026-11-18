@@ -3,4 +3,4 @@ reviews:
   auto_review:
     enabled: true
     base_branches:
-      - "^codex/native-e2e-base$"
+      - "^codex/native-finalization-20261117-base$"

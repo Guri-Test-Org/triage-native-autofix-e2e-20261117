@@ -1,7 +1,7 @@
 name: Native Auto-fix required contracts
 on:
   pull_request:
-    branches: [codex/native-e2e-base]
+    branches: [codex/native-finalization-20261117-base]
     types: [opened, synchronize, reopened, edited, ready_for_review]
 permissions:
   contents: read
@@ -31,7 +31,7 @@ jobs:
       - name: Read independent policy
         uses: actions/checkout@v4
         with:
-          ref: codex/native-e2e-policy
+          ref: codex/native-finalization-20261117-policy
           path: .e2e-policy
           persist-credentials: false
       - name: Independent required policy
